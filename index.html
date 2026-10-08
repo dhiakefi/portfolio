@@ -109,6 +109,10 @@ nav a:hover{color:var(--text);background:rgba(255,255,255,.06)}
 .vedit code{color:var(--accent)}
 input[type=file]{display:none}
 
+.lang{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:700 .8rem var(--body);padding:7px 11px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--accent);color:var(--ink)}
+.vcap{margin-top:14px;color:var(--muted);font-size:.95rem;max-width:60ch}
 /* about */
 .about{display:grid;grid-template-columns:1fr 1fr;gap:56px}
 .about h3{font-size:1.25rem;margin-bottom:16px}
@@ -161,11 +165,13 @@ dialog strong{color:var(--text)}
 dialog{padding:28px 22px}
 }
 @media (max-width:560px){
-.brand span,.brand b{display:none}
-nav{gap:0}
-nav a{padding:8px 7px;font-size:.84rem}
+html{scroll-padding-top:116px}
+.top .wrap{flex-wrap:wrap;height:auto;padding-block:10px;row-gap:6px}
+.brand span{display:none}
+nav{order:3;width:100%;justify-content:space-between}
+nav a{padding:6px 8px;font-size:.88rem}
 }
-@media (max-width:380px){.top .wrap{gap:8px;padding:0 14px}.logo{width:34px;height:34px}nav a{padding:8px 5px;font-size:.78rem}}
+@media (max-width:380px){nav a{padding:6px 5px;font-size:.8rem}}
 </style>
 </head>
 <body>
@@ -178,6 +184,7 @@ nav a{padding:8px 7px;font-size:.84rem}
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="fr" aria-pressed="false">FR</button></div>
   </div>
 </header>
 
@@ -201,18 +208,6 @@ nav a{padding:8px 7px;font-size:.84rem}
     <p class="lede">Branding, UI/UX and interactive projects. Click any project for details.</p>
   </div>
   <div class="grid">
-    <article class="card" data-project="elmahfel" tabindex="0" role="button" aria-haspopup="dialog">
-      <div class="media contain" data-drop="El Mahfel event branding"><img src="data:image/webp;base64,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" alt="El Mahfel event branding" loading="lazy"></div>
-      <div class="body"><h3>El Mahfel: Event Branding</h3><div class="meta">Branding, posters, social visuals</div>
-        <p>A complete visual identity for a student event, with a poster series, social media templates and stage visuals.</p>
-        <div class="tags"><span class="tag">Branding</span><span class="tag">Print design</span><span class="tag">Poster</span></div></div>
-    </article>
-    <article class="card" data-project="schoolapp" tabindex="0" role="button" aria-haspopup="dialog">
-      <div class="media" data-drop="School App UI/UX"><div class="ph"><span class="visitor-only">Prototype preview coming soon</span><span class="edit-only">Drop an image or video here</span></div></div>
-      <div class="body"><h3>School App: UI/UX Concept</h3><div class="meta">UX research, wireframes, prototyping</div>
-        <p>User journeys and interactive prototypes that improve communication between students and administration.</p>
-        <div class="tags"><span class="tag">UI/UX</span><span class="tag">Figma</span><span class="tag">Research</span></div></div>
-    </article>
     <article class="card" data-project="donation" tabindex="0" role="button" aria-haspopup="dialog">
       <div class="media contain" data-drop="Do'nation platform"><img src="data:image/webp;base64,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" alt="Do'nation donation platform" loading="lazy"></div>
       <div class="body"><h3>Do'nation: Donation Platform</h3><div class="meta">Identity, UX, wireframes</div>
@@ -263,6 +258,7 @@ nav a{padding:8px 7px;font-size:.84rem}
           <span class="edit-only">Drop a video here, or add one below</span>
         </div>
       </div>
+      <p class="vcap">These are some shots from the kids' work. I worked with Graines d'entrepreneures.</p>
       <div class="vedit edit-only" id="vedit">
         <div class="row">
           <input type="url" id="vurl" placeholder="Paste a YouTube, Vimeo or .mp4 link" aria-label="Video link">
@@ -321,7 +317,7 @@ nav a{padding:8px 7px;font-size:.84rem}
 </section>
 </main>
 
-<footer>&copy; <span id="year">2026</span> Dhia Kefi. Tunisia.</footer>
+<footer>&copy; <span id="year">2026</span> <span>Dhia Kefi. Tunisia.</span></footer>
 
 <dialog id="dlg" aria-labelledby="dlgTitle">
   <button id="dlgClose" aria-label="Close">&#10005;</button>
@@ -340,15 +336,21 @@ if(editMode) document.body.classList.add('edit');
 $('#year').textContent = new Date().getFullYear();
 
 /* project details */
+let lang='en', openKey=null;
 const P = {
-  elmahfel:{t:'El Mahfel: Event Branding',b:'<p>A complete branding package: poster series, stage visuals, social media templates and a styleguide. The goal was a cohesive identity that resonated with a student audience while staying professional.</p><p><strong>Tools:</strong> Photoshop, Illustrator</p>'},
-  schoolapp:{t:'School App: UI/UX Concept',b:'<p>A UX research project with user flows, wireframes and interactive prototypes, designed to streamline communication between students and school administration. Focused on accessibility and ease of use.</p><p><strong>Tools:</strong> Figma, UX research methods</p>'},
-  donation:{t:"Do'nation: Donation Platform",b:'<p>Branding and UX design for a charitable donation platform: logo exploration, user personas, journey mapping and detailed UI mockups. The emphasis was on building trust and a smooth donation flow.</p><p><strong>Tools:</strong> Figma, Illustrator</p>'},
-  squid:{t:'Squid Game VR: Full Unity Development',b:'<p>A complete VR game built in Unity. I handled:</p><ul><li>Game mechanics and VR interaction systems</li><li>C# scripting for gameplay logic and player controls</li><li>3D environment design and scene setup</li><li>UI/UX design for the VR interface and HUD</li><li>VR optimization and performance tuning</li></ul><p><strong>Tools:</strong> Unity 3D, C#, VR SDK, Visual Studio</p>'},
-  cards:{t:'Personal Birthday Cards',b:'<p>Custom birthday cards for friends. Each one has a unique character illustration, a creative stat layout (Age, Skill, Rizz and so on) and humorous quotes that capture the friend\'s personality.</p><p><strong>Tools:</strong> Photoshop, Illustrator, digital drawing</p>'}
+  donation:{
+    en:{t:"Do'nation: Donation Platform",b:"<p>Branding and UX design for a charitable donation platform: logo exploration, user personas, journey mapping and detailed UI mockups. The emphasis was on building trust and a smooth donation flow.</p><p><strong>Tools:</strong> Figma, Illustrator</p>"},
+    fr:{t:"Do'nation : plateforme de dons",b:"<p>Branding et design UX pour une plateforme de dons caritatifs : exploration de logo, personas, parcours utilisateur et maquettes UI détaillées. L'accent a été mis sur la confiance et la fluidité du parcours de don.</p><p><strong>Outils :</strong> Figma, Illustrator</p>"}},
+  squid:{
+    en:{t:"Squid Game VR: Full Unity Development",b:"<p>A complete VR game built in Unity. I handled:</p><ul><li>Game mechanics and VR interaction systems</li><li>C# scripting for gameplay logic and player controls</li><li>3D environment design and scene setup</li><li>UI/UX design for the VR interface and HUD</li><li>VR optimization and performance tuning</li></ul><p><strong>Tools:</strong> Unity 3D, C#, VR SDK, Visual Studio</p>"},
+    fr:{t:"Squid Game VR : développement complet sous Unity",b:"<p>Un jeu VR complet développé sous Unity. J'ai pris en charge :</p><ul><li>Les mécaniques de jeu et les systèmes d'interaction VR</li><li>Les scripts C# pour la logique de jeu et les contrôles du joueur</li><li>La conception des environnements 3D et la mise en place des scènes</li><li>Le design UI/UX de l'interface VR et du HUD</li><li>L'optimisation VR et des performances</li></ul><p><strong>Outils :</strong> Unity 3D, C#, SDK VR, Visual Studio</p>"}},
+  cards:{
+    en:{t:"Personal Birthday Cards",b:"<p>Custom birthday cards for friends. Each one has a unique character illustration, a creative stat layout (Age, Skill, Rizz and so on) and humorous quotes that capture the friend's personality.</p><p><strong>Tools:</strong> Photoshop, Illustrator, digital drawing</p>"},
+    fr:{t:"Cartes d'anniversaire personnalisées",b:"<p>Des cartes d'anniversaire sur mesure pour des amis. Chacune a une illustration de personnage unique, une mise en page de stats originale (Âge, Skill, Rizz, etc.) et des citations humoristiques qui reflètent la personnalité de l'ami.</p><p><strong>Outils :</strong> Photoshop, Illustrator, dessin numérique</p>"}}
 };
 const dlg=$('#dlg');
-const openCard=c=>{const d=P[c.dataset.project];$('#dlgBody').innerHTML='<h2 id="dlgTitle">'+d.t+'</h2>'+d.b;dlg.showModal()};
+const fillDlg=()=>{const d=P[openKey][lang];$('#dlgBody').innerHTML='<h2 id="dlgTitle">'+d.t+'</h2>'+d.b};
+const openCard=c=>{openKey=c.dataset.project;fillDlg();dlg.showModal()};
 $$('.card').forEach(c=>{
   c.addEventListener('click',()=>openCard(c));
   c.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target===c){e.preventDefault();openCard(c)}});
@@ -432,7 +434,7 @@ if(editMode){
     });
   });
   $('#save').onclick=()=>{
-    const c=document.documentElement.cloneNode(true);c.querySelector('body').classList.remove('edit');
+    const keep=lang;setLang('en');const c=document.documentElement.cloneNode(true);setLang(keep);c.querySelector('body').classList.remove('edit');
     const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob(['<!DOCTYPE html>'+c.outerHTML],{type:'text/html'})),download:'index.html'});
     a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
   };
@@ -441,10 +443,73 @@ if(editMode){
 /* contact form opens the visitor's mail app */
 $('#contactForm').addEventListener('submit',e=>{
   e.preventDefault();const f=e.target;
-  const s=encodeURIComponent(f.subject.value||'Portfolio contact');
-  const b=encodeURIComponent('Name: '+f.name.value+'\n\n'+f.message.value+'\n\nEmail: '+f.email.value);
+  const fr=lang==='fr',s=encodeURIComponent(f.subject.value||(fr?'Contact portfolio':'Portfolio contact'));
+  const b=encodeURIComponent((fr?'Nom : ':'Name: ')+f.name.value+'\n\n'+f.message.value+'\n\nEmail: '+f.email.value);
   location.href='mailto:dhiakefi60@gmail.com?subject='+s+'&body='+b;
 });
+
+/* language switch: French text keyed by the English text on the page */
+const FR={
+"Dhia Kefi – Designer & Multimedia Creator":"Dhia Kefi – Designer & créateur multimédia",
+"Portfolio of Dhia Kefi: branding, UI/UX, motion graphics, VR development and AI video training.":"Portfolio de Dhia Kefi : branding, UI/UX, motion design, développement VR et formation en vidéo IA.",
+"Main":"Principal","Language":"Langue","Close":"Fermer",
+"Designer & Multimedia Creator":"Designer & créateur multimédia",
+"Work":"Projets","AI training":"Formation IA","About":"À propos",
+"Available for freelance projects":"Disponible pour des missions freelance",
+"I design brands, interfaces and moving images.":"Je conçois des marques, des interfaces et des images animées.",
+"Visual identities, UI/UX, motion graphics and interactive prototypes. I mix design thinking with hands-on development, so what I design also works.":"Identités visuelles, UI/UX, motion design et prototypes interactifs. J'associe la réflexion design au développement concret : ce que je conçois fonctionne vraiment.",
+"See my work":"Voir mes projets","Get in touch":"Me contacter",
+"Portrait of Dhia Kefi":"Portrait de Dhia Kefi",
+"Selected work":"Projets sélectionnés",
+"Branding, UI/UX and interactive projects. Click any project for details.":"Branding, UI/UX et projets interactifs. Cliquez sur un projet pour voir les détails.",
+"Do'nation: Donation Platform":"Do'nation : plateforme de dons",
+"Do'nation donation platform":"Plateforme de dons Do'nation",
+"Identity, UX, wireframes":"Identité, UX, wireframes",
+"Logo explorations, user personas, journey mapping and wireframes for a charitable donation platform.":"Recherches de logo, personas, parcours utilisateur et wireframes pour une plateforme de dons caritatifs.",
+"UX design":"Design UX",
+"Squid Game VR: Full Unity Development":"Squid Game VR : développement complet sous Unity",
+"Unity, C# scripting, VR integration":"Unity, scripts C#, intégration VR",
+"A VR game built end to end in Unity: mechanics, VR interactions, UI/UX, 3D environments and C# for every gameplay system.":"Un jeu VR conçu de A à Z sous Unity : mécaniques, interactions VR, UI/UX, environnements 3D et code C# pour chaque système de jeu.",
+"VR":"RV",
+"Personal Birthday Cards":"Cartes d'anniversaire personnalisées",
+"Illustration, character design, typography":"Illustration, character design, typographie",
+"Custom birthday cards for friends, each with its own character illustration, creative stats and playful typography.":"Des cartes d'anniversaire sur mesure pour des amis, chacune avec son personnage illustré, ses stats originales et une typographie ludique.",
+"Character art":"Character design","Personal project":"Projet personnel",
+"Previous card":"Carte précédente","Next card":"Carte suivante",
+"Show card 1":"Afficher la carte 1","Show card 2":"Afficher la carte 2","Show card 3":"Afficher la carte 3",
+"Birthday card design, 1 of 3":"Carte d'anniversaire, 1 sur 3","Birthday card design, 2 of 3":"Carte d'anniversaire, 2 sur 3","Birthday card design, 3 of 3":"Carte d'anniversaire, 3 sur 3",
+"AI Video Trainer":"Formateur en vidéo IA","AI video trainer":"Formateur en vidéo IA",
+"I coached kids aged 10 to 17 in making videos with AI tools, turning their ideas into finished clips.":"J'ai accompagné des enfants de 10 à 17 ans dans la création de vidéos avec des outils d'IA, pour transformer leurs idées en clips terminés.",
+"Role":"Rôle","Learners":"Participants","Kids aged 10 to 17":"Enfants de 10 à 17 ans","Focus":"Thème","Creating video with AI":"Création vidéo avec l'IA",
+"Demo video coming soon":"Vidéo de démonstration bientôt disponible",
+"These are some shots from the kids' work. I worked with Graines d'entrepreneures.":"Voici quelques extraits du travail des enfants. J'ai travaillé avec Graines d'entrepreneures.",
+"Studies":"Formation","Master of Digital Marketing":"Master en Marketing digital","ITEAM University, 2025 to present":"ITEAM University, 2025 à aujourd'hui",
+"Bachelor in Multimedia Communication":"Licence en Communication multimédia","ISAMM, 2023 to 2025":"ISAMM, 2023 à 2025",
+"Toolkit":"Outils",
+"Languages: Arabic (fluent), English (fluent), French (conversational). Based in Tunis, Tunisia.":"Langues : arabe (courant), anglais (courant), français (conversationnel). Basé à Tunis, en Tunisie.",
+"Let's work together":"Travaillons ensemble",
+"Have a project in mind? Send a message and I'll reply within 24 to 48 hours.":"Un projet en tête ? Envoyez-moi un message, je réponds sous 24 à 48 heures.",
+"Your name":"Votre nom","Your email":"Votre e-mail","Subject":"Objet","Your message":"Votre message","Send message":"Envoyer le message",
+"Dhia Kefi. Tunisia.":"Dhia Kefi. Tunisie."
+};
+const orig=new WeakMap(), ATTRS=['placeholder','aria-label','alt'], MD=$('meta[name=description]'), T0=[document.title,MD.content];
+function setLang(l,persist){
+  lang=l;document.documentElement.lang=l;
+  document.title=l==='fr'?FR[T0[0]]:T0[0];MD.content=l==='fr'?FR[T0[1]]:T0[1];
+  $$('body *').forEach(el=>{
+    if(['SCRIPT','STYLE','CODE'].includes(el.tagName))return;
+    let o=orig.get(el);
+    if(!o){o={text:el.children.length?'':el.textContent.trim(),attrs:{}};ATTRS.forEach(a=>{if(el.hasAttribute(a))o.attrs[a]=el.getAttribute(a)});orig.set(el,o)}
+    if(o.text&&FR[o.text])el.textContent=l==='fr'?FR[o.text]:o.text;
+    for(const a in o.attrs)if(FR[o.attrs[a]])el.setAttribute(a,l==='fr'?FR[o.attrs[a]]:o.attrs[a]);
+  });
+  $$('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));
+  if(dlg.open)fillDlg();
+  if(persist){try{localStorage.setItem('dk_lang',l)}catch(e){}}
+}
+$$('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang,true));
+let savedLang='';try{savedLang=localStorage.getItem('dk_lang')||''}catch(e){}
+setLang(savedLang||((navigator.language||'').toLowerCase().startsWith('fr')?'fr':'en'));
 </script>
 </body>
 </html>
